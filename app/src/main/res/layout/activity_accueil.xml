@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent">
     <include
         layout="@layout/l_header"
         android:layout_width="match_parent"
@@ -16,7 +13,9 @@
         android:layout_height="wrap_content"
         android:textSize="26sp"
         android:layout_margin="4dp"
-        tools:text="Mes coupons" />
+        android:textColor="@android:color/holo_blue_light"
+        android:text="Mes coupons"
+        android:layout_gravity="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="18sp"
-            tools:text="Saisir manuellement son code" />
+            android:text="Saisir manuellement son code" />
 
         <SearchView
             android:layout_width="match_parent"
@@ -39,6 +38,7 @@
             android:queryHint="adaz" />
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
