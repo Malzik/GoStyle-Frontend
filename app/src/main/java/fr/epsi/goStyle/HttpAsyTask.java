@@ -2,6 +2,9 @@ package fr.epsi.goStyle;
 
 import android.os.AsyncTask;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,6 +45,8 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
         } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
             return e.getMessage();
+        } catch (JSONException e) {
+            return e.getMessage();
         }
     }
 
@@ -56,7 +61,7 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
     }
 
 
-    public Object call(String urlStr, String method, Map<String, String> body, String token) throws IOException {
+    public Object call(String urlStr, String method, Map<String, String> body, String token) throws IOException, JSONException {
 
         URL url = new URL(urlStr);
         HttpURLConnection client = null;
@@ -87,9 +92,19 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
                 os.write(input, 0, input.length);
             }
             System.out.println(jsonInputString);
-            System.out.println(client.getInputStream());
-            InputStream in = new BufferedInputStream(client.getInputStream());
-            return convertStreamToString(in);
+
+            int code = client.getResponseCode();
+
+            if(code >= 300) {
+                return "{ \"erreurs\":\"" + code +  "\"}";
+            }
+            else {
+                InputStream in = new BufferedInputStream(client.getInputStream());
+                String responseBody = convertStreamToString(in);
+                JSONObject result = new JSONObject(responseBody);
+                result.put("responseCode", client.getResponseCode());
+                return result.toString();
+            }
         } finally {
             if(client != null)
                 client.disconnect();
