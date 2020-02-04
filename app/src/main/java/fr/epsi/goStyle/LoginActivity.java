@@ -1,5 +1,6 @@
 package fr.epsi.goStyle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,13 +22,18 @@ public class LoginActivity extends GoStyleActivity {
     public static String token;
     private TextView tokenView;
 
+    public static void display(AppCompatActivity activity){
+        Intent intent=new Intent(activity, LoginActivity.class);
+        activity.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        final EditText emailInput = findViewById(R.id.email_input);
-        final EditText passwordInput = findViewById(R.id.password_input);
+        final EditText emailInput = findViewById(R.id.login_email);
+        final EditText passwordInput = findViewById(R.id.login_password);
         final Button loginButton = findViewById(R.id.connexion_button);
         final Button registerButton = findViewById(R.id.inscription_button);
         this.tokenView = findViewById(R.id.token_text);
@@ -38,17 +44,24 @@ public class LoginActivity extends GoStyleActivity {
                 String email = emailInput.getText().toString();
                 String password = passwordInput.getText().toString();
 
-                try {
-                    LoginActivity.this.tokenView.setText("heyyy");
-                    LoginActivity.this.login(email, password);
-                    CouponActivity.display(LoginActivity.this);
+                if(!email.isEmpty() && !password.isEmpty()) {
+                    try {
+                        LoginActivity.this.login(email, password);
+                    }
+                    catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
                 }
-                catch (SQLException e) {
-                    e.printStackTrace();
-                }
-                catch (MalformedURLException e) {
-                    e.printStackTrace();
-                }
+            }
+        });
+
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterActivity.display(LoginActivity.this);
             }
         });
     }
@@ -62,10 +75,16 @@ public class LoginActivity extends GoStyleActivity {
             @Override
             public void webServiceDone(String result) {
                 try {
-                    JSONObject token = new JSONObject(result);
-                    LoginActivity.this.token = token.get("token").toString();
-
-                } catch (JSONException e) {
+                    JSONObject jsonResult = new JSONObject(result);
+                    if(!jsonResult.has("erreurs")) {
+                        System.out.println(jsonResult.get("token").toString());
+                        LoginActivity.this.token = jsonResult.get("token").toString();
+                    }
+                    else {
+                        System.out.println(jsonResult.get("status").toString());
+                    }
+                }
+                catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
