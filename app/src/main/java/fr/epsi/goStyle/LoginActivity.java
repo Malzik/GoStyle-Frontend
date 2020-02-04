@@ -16,7 +16,7 @@ import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends GoStyleActivity {
 
     public static String token;
     private TextView tokenView;
@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     LoginActivity.this.tokenView.setText("heyyy");
                     LoginActivity.this.login(email, password);
+                    CouponActivity.display(LoginActivity.this);
                 }
                 catch (SQLException e) {
                     e.printStackTrace();
@@ -63,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     JSONObject token = new JSONObject(result);
                     LoginActivity.this.token = token.get("token").toString();
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
