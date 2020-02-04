@@ -47,9 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
 
-                System.out.println("zeub");
                 if(passwordText.equals(confirmationText)) {
-                    System.out.println("zeub");
                     register(emailText, firstnameText, lastnameText, passwordText);
                 }
                 // Mauvais mot de passe

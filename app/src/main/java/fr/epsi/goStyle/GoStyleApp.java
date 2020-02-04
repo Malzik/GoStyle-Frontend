@@ -6,7 +6,7 @@ import android.widget.Button;
 
 public class GoStyleApp extends Application {
     private String title="";
-
+    private String token;
     @Override
     public void onCreate() {
 
@@ -19,5 +19,13 @@ public class GoStyleApp extends Application {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    protected void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
     }
 }

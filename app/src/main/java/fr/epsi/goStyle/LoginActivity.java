@@ -19,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends GoStyleActivity {
 
-    public static String token;
     private TextView tokenView;
 
     public static void display(AppCompatActivity activity){
@@ -66,6 +65,10 @@ public class LoginActivity extends GoStyleActivity {
         });
     }
 
+    public void setToken(String token) {
+        this.goStyleApp.setToken(token);
+    }
+
     protected void login(String email, String password) throws SQLException, MalformedURLException {
         String url = "http://10.0.2.2:8000/api/login";
         Map<String, String> loginValue = new HashMap<>();
@@ -78,7 +81,7 @@ public class LoginActivity extends GoStyleActivity {
                     JSONObject jsonResult = new JSONObject(result);
                     if(!jsonResult.has("erreurs")) {
                         System.out.println(jsonResult.get("token").toString());
-                        LoginActivity.this.token = jsonResult.get("token").toString();
+                        setToken(jsonResult.get("token").toString());
                     }
                     else {
                         System.out.println(jsonResult.get("status").toString());
@@ -95,5 +98,7 @@ public class LoginActivity extends GoStyleActivity {
             }
         }).execute();
     }
+
+
 
 }

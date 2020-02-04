@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import fr.epsi.goStyle.model.Coupon;
 
 public class GoStyleActivity extends AppCompatActivity {
+
     protected GoStyleApp goStyleApp;
 
     @Override
@@ -27,7 +28,6 @@ public class GoStyleActivity extends AppCompatActivity {
             textViewTitle.setText(title);
         }
     }
-
 
     protected void displayToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();
