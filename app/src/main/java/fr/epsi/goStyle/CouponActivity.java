@@ -39,7 +39,7 @@ public class CouponActivity extends GoStyleActivity {
                 CouponDetailsActivity.display(CouponActivity.this,coupons.get(position));
             }
         });
-        String urlStr="file:///C:/Users/Genevee/Downloads/offers.json";
+        String urlStr="http://10.0.2.2:8000/offers";
 
         new HttpAskTask(urlStr, new HttpAskTask.HttpAsyTaskListener() {
             @Override
@@ -58,9 +58,7 @@ public class CouponActivity extends GoStyleActivity {
 
     private void initData(String data) {
         try {
-            JSONObject jsonObject;
-            jsonObject=new JSONObject(data);
-            JSONArray jsonArray=jsonObject.getJSONArray("items");
+            JSONArray jsonArray= new JSONArray(data);
             for(int i=0;i<jsonArray.length();i++){
                 Coupon coupon=new Coupon(jsonArray.getJSONObject(i));
                 coupons.add(coupon);

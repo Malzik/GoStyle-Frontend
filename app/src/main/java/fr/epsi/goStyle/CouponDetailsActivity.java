@@ -25,17 +25,17 @@ public class CouponDetailsActivity extends GoStyleActivity {
         coupon = (Coupon) getIntent().getExtras().get("coupon");
         TextView textName = findViewById(R.id.textViewNameDetails);
         TextView textViewCode= findViewById(R.id.textViewCodeDetails);
-        TextView textViewDeadLine= findViewById(R.id.textViewDeadLine);
+        TextView textViewDeadLine= findViewById(R.id.textViewDeadLineDetails);
         TextView textViewDescription = findViewById(R.id.textViewDescriptionDetails);
         ImageView imageView= findViewById(R.id.imageViewCouponDetails);
 
         textName.setText(coupon.getName());
         textViewCode.setText(coupon.getCode());
-        textViewDeadLine.setText(coupon.getDeadLine());
+        textViewDeadLine.setText("Utiliser avant le : " + coupon.getDeadline());
         textViewDescription.setText(coupon.getDescription());
-        Picasso.get().load(coupon.getUrlPhoto()).into(imageView);
+        Picasso.get().load(coupon.getLogo()).into(imageView);
 
-        setTitle(coupon.getName());
+        setTitle("Détails");
 
     }
 }

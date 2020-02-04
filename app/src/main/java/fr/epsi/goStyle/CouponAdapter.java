@@ -38,8 +38,8 @@ public class CouponAdapter extends ArrayAdapter<Coupon> {
         Coupon coupon=getItem(position);
 
         textViewName.setText(coupon.getName());
-        textViewDeadLine.setText(coupon.getDeadLine());
-        Picasso.get().load(coupon.getUrlPhoto()).into(imageView);
+        textViewDeadLine.setText(coupon.getDeadline());
+        Picasso.get().load(coupon.getLogo()).into(imageView);
         return convertView;
     }
 }

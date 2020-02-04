@@ -1,6 +1,8 @@
 package fr.epsi.goStyle;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +27,7 @@ public class GoStyleActivity extends AppCompatActivity {
             textViewTitle.setText(title);
         }
     }
+
 
     protected void displayToast(String msg){
         Toast.makeText(this,msg,Toast.LENGTH_SHORT).show();

@@ -9,15 +9,15 @@ public class Coupon implements Serializable {
     private String name="";
     private String code="";
     private String description="";
-    private String urlPhoto="";
-    private String deadLine="";
+    private String logo="";
+    private String deadline="";
 
     public Coupon(JSONObject jsonObject){
         name=jsonObject.optString("name","");
         code=jsonObject.optString("code","");
         description=jsonObject.optString("description","");
-        urlPhoto=jsonObject.optString("logo","");
-        deadLine=jsonObject.optString("deadline","");
+        logo=jsonObject.optString("logo","");
+        deadline=jsonObject.optString("deadline","");
     }
 
     public String getName() {
@@ -44,19 +44,19 @@ public class Coupon implements Serializable {
         this.description = description;
     }
 
-    public String getUrlPhoto() {
-        return urlPhoto;
+    public String getLogo() {
+        return logo;
     }
 
-    public void setUrlPhoto(String urlPhoto) {
-        this.urlPhoto = urlPhoto;
+    public void setLogo(String logo) {
+        this.logo = logo;
     }
 
-    public String getDeadLine() {
-        return deadLine;
+    public String getDeadline() {
+        return deadline;
     }
 
-    public void setDeadLine(String deadLine) {
-        this.deadLine = deadLine;
+    public void setDeadline(String deadline) {
+        this.deadline = deadline;
     }
 }
