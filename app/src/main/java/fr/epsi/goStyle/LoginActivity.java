@@ -84,7 +84,7 @@ public class LoginActivity extends GoStyleActivity {
                         setToken(jsonResult.get("token").toString());
                     }
                     else {
-                        System.out.println(jsonResult.get("status").toString());
+                        System.out.println(jsonResult.get("erreurs").toString());
                     }
                 }
                 catch (JSONException e) {

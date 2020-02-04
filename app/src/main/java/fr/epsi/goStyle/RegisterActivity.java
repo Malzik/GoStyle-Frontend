@@ -71,7 +71,7 @@ public class RegisterActivity extends AppCompatActivity {
                         LoginActivity.display(RegisterActivity.this);
                     }
                     else {
-                        System.out.println(jsonResult.get("status").toString());
+                        System.out.println(jsonResult.get("erreurs").toString());
                     }
                 }
                 catch (JSONException e) {
