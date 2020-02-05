@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -15,6 +16,8 @@ import java.util.Map;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    private TextView registerErrors;
 
     public static void display(AppCompatActivity activity){
         Intent intent=new Intent(activity, RegisterActivity.class);
@@ -33,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText lastname = findViewById(R.id.register_lastname);
         final EditText password = findViewById(R.id.register_password);
         final EditText confirmation = findViewById(R.id.confirmation_password);
+        this.registerErrors = findViewById(R.id.register_errors);
 
         register.setOnClickListener(new View.OnClickListener() {
 
@@ -44,13 +48,23 @@ public class RegisterActivity extends AppCompatActivity {
                 String firstnameText = firstname.getText().toString();
                 String lastnameText = lastname.getText().toString();
                 if(emailText.isEmpty() || firstnameText.isEmpty() || lastnameText.isEmpty() || passwordText.isEmpty()) {
+                    registerErrors.setText("Certains champs sont vides");
                     return;
                 }
 
                 if(passwordText.equals(confirmationText)) {
                     register(emailText, firstnameText, lastnameText, passwordText);
                 }
-                // Mauvais mot de passe
+                else{
+                    registerErrors.setText("Les mots de passe ne correspondent pas");
+                }
+            }
+        });
+
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LoginActivity.display(RegisterActivity.this);
             }
         });
     }
@@ -72,6 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     else {
                         System.out.println(jsonResult.get("erreurs").toString());
+                        registerErrors.setText("Le formulaire est invalide");
                     }
                 }
                 catch (JSONException e) {

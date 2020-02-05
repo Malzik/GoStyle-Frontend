@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class LoginActivity extends GoStyleActivity {
 
-    private TextView tokenView;
+    private TextView loginErrors;
 
     public static void display(AppCompatActivity activity){
         Intent intent=new Intent(activity, LoginActivity.class);
@@ -35,7 +35,7 @@ public class LoginActivity extends GoStyleActivity {
         final EditText passwordInput = findViewById(R.id.login_password);
         final Button loginButton = findViewById(R.id.connexion_button);
         final Button registerButton = findViewById(R.id.inscription_button);
-        this.tokenView = findViewById(R.id.token_text);
+        this.loginErrors = findViewById(R.id.login_errors);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +53,9 @@ public class LoginActivity extends GoStyleActivity {
                     catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
+                }
+                else {
+                    loginErrors.setText("Les champs sont vides");
                 }
             }
         });
@@ -85,6 +88,7 @@ public class LoginActivity extends GoStyleActivity {
                         CouponActivity.display(LoginActivity.this);
                     }
                     else {
+                        loginErrors.setText("Mauvais identifiant et/ou mot de passe");
                         System.out.println(jsonResult.get("erreurs").toString());
                     }
                 }
