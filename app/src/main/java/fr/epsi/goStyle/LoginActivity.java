@@ -94,11 +94,8 @@ public class LoginActivity extends GoStyleActivity {
                             setToken(jsonResult.get("token").toString());
                             CouponActivity.display(LoginActivity.this);
                         }
-                    }
-                    else {
-                        System.out.println(jsonResult.get("token").toString());
-                        setToken(jsonResult.get("token").toString());
-                        ProfileActivity.display(LoginActivity.this);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
 

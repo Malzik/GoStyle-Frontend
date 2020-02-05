@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.sql.SQLOutput;
@@ -29,6 +30,7 @@ public class ProfileActivity extends GoStyleActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profil);
+        super.initHeader(this);
         final EditText email = findViewById(R.id.profile_email);
         final EditText firstname = findViewById(R.id.profile_firstname);
         final EditText lastname = findViewById(R.id.profile_lastname);
@@ -65,54 +67,64 @@ public class ProfileActivity extends GoStyleActivity {
     }
 
     public void updateProfile(String token, final EditText email, final EditText firstname, final EditText lastname) {
-        new HttpAsyTask("http://10.0.2.2:8000/api/user", "GET", null, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
-            @Override
-            public void webServiceDone(String result) {
-                try {
-                    JSONObject jsonResult = new JSONObject(result);
-                    if(!jsonResult.has("erreurs")) {
-                        email.setText(jsonResult.get("email").toString());
-                        firstname.setText(jsonResult.get("firstName").toString());
-                        lastname.setText(jsonResult.get("lastName").toString());
+        try {
+            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "user";
+            new HttpAsyTask(url, "GET", null, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+                @Override
+                public void webServiceDone(String result) {
+                    try {
+                        JSONObject jsonResult = new JSONObject(result);
+                        if(!jsonResult.has("erreurs")) {
+                            email.setText(jsonResult.get("email").toString());
+                            firstname.setText(jsonResult.get("first_name").toString());
+                            lastname.setText(jsonResult.get("last_name").toString());
+                        }
+                        else {
+                            System.out.println("L'utilisateur n'a pas pu être récupérer");
+                        }
                     }
-                    else {
-                        System.out.println("L'utilisateur n'a pas pu être récupérer");
+                    catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void webServiceError(Exception e) {
-                // Gestion erreurs
-            }
-        }).execute();
+                @Override
+                public void webServiceError(Exception e) {
+                    // Gestion erreurs
+                }
+            }).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void saveProfile(Map<String, String> parameters) {
-        new HttpAsyTask("http://10.0.2.2:8000/api/user", "PUT", parameters, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
-            @Override
-            public void webServiceDone(String result) {
-                try {
-                    JSONObject jsonResult = new JSONObject(result);
-                    if(!jsonResult.has("erreurs")) {
-                        ProfileActivity.display(ProfileActivity.this);
+        try {
+            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "user";
+            new HttpAsyTask(url, "PUT", parameters, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+                @Override
+                public void webServiceDone(String result) {
+                    try {
+                        JSONObject jsonResult = new JSONObject(result);
+                        if(!jsonResult.has("erreurs")) {
+                            ProfileActivity.display(ProfileActivity.this);
+                        }
+                        else {
+                            System.out.println("La requête n'a pas été traitée correctement");
+                        }
                     }
-                    else {
-                        System.out.println("La requête n'a pas été traitée correctement");
+                    catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void webServiceError(Exception e) {
-                // Gestion erreurs
-            }
-        }).execute();
+                @Override
+                public void webServiceError(Exception e) {
+                    System.out.println(e);
+                }
+            }).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
