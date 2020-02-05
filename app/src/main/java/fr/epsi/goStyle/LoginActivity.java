@@ -82,6 +82,7 @@ public class LoginActivity extends GoStyleActivity {
                     if(!jsonResult.has("erreurs")) {
                         System.out.println(jsonResult.get("token").toString());
                         setToken(jsonResult.get("token").toString());
+                        CouponActivity.display(LoginActivity.this);
                     }
                     else {
                         System.out.println(jsonResult.get("erreurs").toString());

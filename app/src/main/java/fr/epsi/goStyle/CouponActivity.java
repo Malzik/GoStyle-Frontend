@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.Nullable;
 import fr.epsi.goStyle.model.Coupon;
@@ -41,7 +42,7 @@ public class CouponActivity extends GoStyleActivity {
         });
         String urlStr="http://10.0.2.2:8000/offers";
 
-        new HttpAskTask(urlStr, new HttpAskTask.HttpAsyTaskListener() {
+        new HttpAsyTask(urlStr, "POST", new HashMap<String, String>(), null, new HttpAsyTask.HttpAsyTaskListener() {
             @Override
             public void webServiceDone(String result) {
                 initData(result);
