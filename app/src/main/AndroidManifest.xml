@@ -5,6 +5,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera"/>
+    <uses-feature android:name="android.hardware.camera.autofocus"/>
 
     <application
         android:name=".GoStyleApp"
@@ -18,8 +21,9 @@
 
         <activity android:name=".CouponDetailsActivity"/>
         <activity android:name=".GoStyleActivity"/>
-        <activity android:name=".CouponActivity"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"/>
+        <activity android:name=".ScanActivity"/>
+        <activity android:name=".CouponActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

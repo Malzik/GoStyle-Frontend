@@ -1,26 +1,48 @@
 package fr.epsi.goStyle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import fr.epsi.goStyle.model.Coupon;
 
 public class GoStyleActivity extends AppCompatActivity {
 
     protected GoStyleApp goStyleApp;
+    protected ImageView qrcode;
+    protected ImageView home;
+    protected ImageView profil;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         goStyleApp=(GoStyleApp) getApplication();
     }
+
+    public void initHeader(final AppCompatActivity activity){
+        qrcode = findViewById(R.id.qrCode_image);
+        qrcode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ScanActivity.display(activity);
+            }
+        });
+        home = findViewById(R.id.home_button);
+        home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CouponActivity.display(activity);
+            }
+        });
+
+    }
+
+
 
     protected void setTitle(String title){
         TextView textViewTitle=findViewById(R.id.current_page_title);

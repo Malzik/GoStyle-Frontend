@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import fr.epsi.goStyle.model.Coupon;
 
 public class CouponActivity extends GoStyleActivity {
@@ -20,7 +21,7 @@ public class CouponActivity extends GoStyleActivity {
     private CouponAdapter adapter;
     private ArrayList<Coupon> coupons;
 
-    public static void display(GoStyleActivity activity){
+    public static void display(AppCompatActivity activity){
         Intent intent=new Intent(activity, CouponActivity.class);
         activity.startActivity(intent);
     }
@@ -29,6 +30,7 @@ public class CouponActivity extends GoStyleActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
+        super.initHeader(this);
         coupons=new ArrayList<>();
         ListView listView=findViewById(R.id.list_coupons);
         adapter=new CouponAdapter(this,R.layout.c_coupon,coupons);
@@ -39,7 +41,7 @@ public class CouponActivity extends GoStyleActivity {
                 CouponDetailsActivity.display(CouponActivity.this,coupons.get(position));
             }
         });
-        String urlStr="http://10.0.2.2:8000/offers";
+        String urlStr="http://192.168.43.49:8000/offers";
 
         new HttpAskTask(urlStr, new HttpAskTask.HttpAsyTaskListener() {
             @Override
