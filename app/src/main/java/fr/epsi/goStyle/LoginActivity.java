@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -75,34 +76,38 @@ public class LoginActivity extends GoStyleActivity {
     }
 
     protected void login(String email, String password) throws SQLException, MalformedURLException {
-        String url = "http://10.0.2.2:8000/api/login";
-        Map<String, String> loginValue = new HashMap<>();
-        loginValue.put("email", email);
-        loginValue.put("password", password);
-        new HttpAsyTask(url, "POST", loginValue, null, new HttpAsyTask.HttpAsyTaskListener() {
-            @Override
-            public void webServiceDone(String result) {
-                try {
-                    JSONObject jsonResult = new JSONObject(result);
-                    if(jsonResult.has("status") && Integer.parseInt(jsonResult.get("status").toString()) >= 400) {
-                        loginErrors.setText(jsonResult.get("message").toString());
+        try {
+            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "login";
+            Map<String, String> loginValue = new HashMap<>();
+            loginValue.put("email", email);
+            loginValue.put("password", password);
+            new HttpAsyTask(url, "POST", loginValue, null, new HttpAsyTask.HttpAsyTaskListener() {
+                @Override
+                public void webServiceDone(String result) {
+                    try {
+                        JSONObject jsonResult = new JSONObject(result);
+                        if(jsonResult.has("status") && Integer.parseInt(jsonResult.get("status").toString()) >= 400) {
+                            loginErrors.setText(jsonResult.get("message").toString());
+                        }
+                        else {
+                            System.out.println(jsonResult.get("token").toString());
+                            setToken(jsonResult.get("token").toString());
+                            CouponActivity.display(LoginActivity.this);
+                        }
                     }
-                    else {
-                        System.out.println(jsonResult.get("token").toString());
-                        setToken(jsonResult.get("token").toString());
-                        CouponActivity.display(LoginActivity.this);
+                    catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void webServiceError(Exception e) {
-                System.out.println(e.getMessage());
-            }
-        }).execute();
+                @Override
+                public void webServiceError(Exception e) {
+                    System.out.println(e.getMessage());
+                }
+            }).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

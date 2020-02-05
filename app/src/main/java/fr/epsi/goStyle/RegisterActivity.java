@@ -10,6 +10,7 @@ import android.widget.TextView;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,34 +71,38 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     protected void register(String email, String firstname, String lastname, String password) {
-        String url = "http://10.0.2.2:8000/api/register";
-        Map<String, String> registerValue = new HashMap<>();
-        registerValue.put("first_name", firstname);
-        registerValue.put("last_name", lastname);
-        registerValue.put("email", email);
-        registerValue.put("password", password);
-        new HttpAsyTask(url, "POST", registerValue, null, new HttpAsyTask.HttpAsyTaskListener() {
-            @Override
-            public void webServiceDone(String result) {
-                try {
-                    JSONObject jsonResult = new JSONObject(result);
-                    if(!jsonResult.has("erreurs") && jsonResult.get("responseCode").equals(201)) {
-                        LoginActivity.display(RegisterActivity.this);
+        try {
+            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "register";
+            Map<String, String> registerValue = new HashMap<>();
+            registerValue.put("first_name", firstname);
+            registerValue.put("last_name", lastname);
+            registerValue.put("email", email);
+            registerValue.put("password", password);
+            new HttpAsyTask(url, "POST", registerValue, null, new HttpAsyTask.HttpAsyTaskListener() {
+                @Override
+                public void webServiceDone(String result) {
+                    try {
+                        JSONObject jsonResult = new JSONObject(result);
+                        if(result.length() > 1) {
+                            LoginActivity.display(RegisterActivity.this);
+                        }
+                        else {
+                            System.out.println(jsonResult.get("erreurs").toString());
+                            registerErrors.setText("Le formulaire est invalide");
+                        }
                     }
-                    else {
-                        System.out.println(jsonResult.get("erreurs").toString());
-                        registerErrors.setText("Le formulaire est invalide");
+                    catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
 
-            @Override
-            public void webServiceError(Exception e) {
-                // Gestion erreurs
-            }
-        }).execute();
+                @Override
+                public void webServiceError(Exception e) {
+                    // Gestion erreurs
+                }
+            }).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

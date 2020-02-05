@@ -21,9 +21,9 @@
 
         <activity android:name=".CouponDetailsActivity"/>
         <activity android:name=".GoStyleActivity"/>
-        <activity android:name=".LoginActivity"/>
         <activity android:name=".ScanActivity"/>
-        <activity android:name=".CouponActivity">
+        <activity android:name=".CouponActivity"/>
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -11,6 +11,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import androidx.appcompat.app.AppCompatActivity;
 import fr.epsi.goStyle.model.Coupon;
 
@@ -43,35 +45,37 @@ public class CouponDetailsActivity extends GoStyleActivity {
         qrcode = (String) getIntent().getExtras().get("qrcode");
 
         if (qrcode != null){
-            String urlStr="http://192.168.43.49:8000/offers/" + qrcode;
-            new HttpAskTask(urlStr, new HttpAskTask.HttpAsyTaskListener() {
-                @Override
-                public void webServiceDone(String result) {
-                    TextView textName = findViewById(R.id.textViewNameDetails);
-                    TextView textViewCode= findViewById(R.id.textViewCodeDetails);
-                    TextView textViewDeadLine= findViewById(R.id.textViewDeadLineDetails);
-                    TextView textViewDescription = findViewById(R.id.textViewDescriptionDetails);
-                    ImageView imageView= findViewById(R.id.imageViewCouponDetails);
-                    initData(result);
-                    setData(textName, textViewCode, textViewDeadLine, textViewDescription, imageView);
-                }
+            try {
+                String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "offers/" + qrcode;
 
-                @Override
-                public void webServiceError(Exception e) {
-                    displayToast(e.getMessage());
-                }
-            }).execute();
+                new HttpAsyTask(url, "GET", null, goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+                    @Override
+                    public void webServiceDone(String result) {
+                        TextView textName = findViewById(R.id.textViewNameDetails);
+                        TextView textViewCode= findViewById(R.id.textViewCodeDetails);
+                        TextView textViewDeadLine= findViewById(R.id.textViewDeadLineDetails);
+                        TextView textViewDescription = findViewById(R.id.textViewDescriptionDetails);
+                        ImageView imageView= findViewById(R.id.imageViewCouponDetails);
+                        initData(result);
+                        setData(textName, textViewCode, textViewDeadLine, textViewDescription, imageView);
+                    }
 
-
+                    @Override
+                    public void webServiceError(Exception e) {
+                        System.out.println(e.getMessage());
+                        displayToast(e.getMessage());
+                    }
+                }).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         else
         {
             coupon = (Coupon) getIntent().getExtras().get("coupon");
             setData(textName, textViewCode, textViewDeadLine, textViewDescription, imageView);
         }
-
         setTitle("Détails");
-
     }
 
     private void setData(TextView textName, TextView textViewCode, TextView textViewDeadLine, TextView textViewDescription, ImageView imageView){
@@ -85,8 +89,7 @@ public class CouponDetailsActivity extends GoStyleActivity {
     private void initData(String data) {
         try {
             JSONObject jsonObject= new JSONObject(data);
-            Coupon couponNew = new Coupon(jsonObject);
-            coupon = couponNew;
+            coupon = new Coupon(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }

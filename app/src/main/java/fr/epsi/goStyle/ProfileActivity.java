@@ -19,8 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends GoStyleActivity {
 
-    public static void display(AppCompatActivity activity){
-        Intent intent=new Intent(activity, LoginActivity.class);
+    public static void display(GoStyleActivity activity){
+        Intent intent=new Intent(activity, ProfileActivity.class);
         activity.startActivity(intent);
     }
 
@@ -47,7 +47,7 @@ public class ProfileActivity extends GoStyleActivity {
 
             @Override
             public void onClick(View v) {
-                if(passwordText == confirmationText) {
+                if(passwordText.equals(confirmationText)) {
                     Map<String, String> parameters = new HashMap<>();
                     parameters.put("email", emailText);
                     parameters.put("first_name", firstnameText);

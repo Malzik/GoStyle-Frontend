@@ -26,7 +26,7 @@ public class GoStyleActivity extends AppCompatActivity {
         goStyleApp=(GoStyleApp) getApplication();
     }
 
-    public void initHeader(final AppCompatActivity activity){
+    public void initHeader(final GoStyleActivity activity){
         qrcode = findViewById(R.id.qrCode_image);
         qrcode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +39,13 @@ public class GoStyleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 CouponActivity.display(activity);
+            }
+        });
+        profil = findViewById(R.id.profil_image);
+        profil.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ProfileActivity.display(activity);
             }
         });
 
