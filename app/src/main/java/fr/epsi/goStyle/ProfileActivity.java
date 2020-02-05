@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends GoStyleActivity {
 
-    public static void display(GoStyleActivity activity){
+    public static void display(AppCompatActivity activity){
         Intent intent=new Intent(activity, ProfileActivity.class);
         activity.startActivity(intent);
     }
@@ -27,40 +28,67 @@ public class ProfileActivity extends GoStyleActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_profil);
         final EditText email = findViewById(R.id.profile_email);
         final EditText firstname = findViewById(R.id.profile_firstname);
         final EditText lastname = findViewById(R.id.profile_lastname);
         final EditText newPassword = findViewById(R.id.new_password);
-        final EditText password = findViewById(R.id.profile_password);
-        final EditText confirmation = findViewById(R.id.confirmation_password);
+        final EditText confirmation = findViewById(R.id.password_confirmation);
         final Button saveProfile = findViewById(R.id.save_profile_button);
 
+        this.updateProfile(this.goStyleApp.getToken(), email, firstname, lastname);
+
         saveProfile.setOnClickListener(new View.OnClickListener() {
-
-            String emailText = email.getText().toString();
-            String firstnameText = firstname.getText().toString();
-            String lastnameText = lastname.getText().toString();
-            String newPasswordText = newPassword.getText().toString();
-            String passwordText = password.getText().toString();
-            String confirmationText = confirmation.getText().toString();
-
             @Override
             public void onClick(View v) {
-                if(passwordText.equals(confirmationText)) {
+
+                String emailText = email.getText().toString();
+                String firstnameText = firstname.getText().toString();
+                String lastnameText = lastname.getText().toString();
+                String newPasswordText = newPassword.getText().toString();
+                String confirmationText = confirmation.getText().toString();
+
+                if(newPasswordText.equals(confirmationText)) {
                     Map<String, String> parameters = new HashMap<>();
                     parameters.put("email", emailText);
                     parameters.put("first_name", firstnameText);
                     parameters.put("last_name", lastnameText);
 
-                    if(newPasswordText.isEmpty()) {
+                    if(!newPasswordText.isEmpty()) {
                         parameters.put("password", newPasswordText);
                     }
-
                     saveProfile(parameters);
                 }
             }
         });
+
+    }
+
+    public void updateProfile(String token, final EditText email, final EditText firstname, final EditText lastname) {
+        new HttpAsyTask("http://10.0.2.2:8000/api/user", "GET", null, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+            @Override
+            public void webServiceDone(String result) {
+                try {
+                    JSONObject jsonResult = new JSONObject(result);
+                    if(!jsonResult.has("erreurs")) {
+                        email.setText(jsonResult.get("email").toString());
+                        firstname.setText(jsonResult.get("firstName").toString());
+                        lastname.setText(jsonResult.get("lastName").toString());
+                    }
+                    else {
+                        System.out.println("L'utilisateur n'a pas pu être récupérer");
+                    }
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void webServiceError(Exception e) {
+                // Gestion erreurs
+            }
+        }).execute();
     }
 
     public void saveProfile(Map<String, String> parameters) {
