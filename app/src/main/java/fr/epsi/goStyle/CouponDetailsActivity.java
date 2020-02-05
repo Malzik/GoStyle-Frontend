@@ -47,7 +47,13 @@ public class CouponDetailsActivity extends GoStyleActivity {
             new HttpAskTask(urlStr, new HttpAskTask.HttpAsyTaskListener() {
                 @Override
                 public void webServiceDone(String result) {
+                    TextView textName = findViewById(R.id.textViewNameDetails);
+                    TextView textViewCode= findViewById(R.id.textViewCodeDetails);
+                    TextView textViewDeadLine= findViewById(R.id.textViewDeadLineDetails);
+                    TextView textViewDescription = findViewById(R.id.textViewDescriptionDetails);
+                    ImageView imageView= findViewById(R.id.imageViewCouponDetails);
                     initData(result);
+                    setData(textName, textViewCode, textViewDeadLine, textViewDescription, imageView);
                 }
 
                 @Override
@@ -56,7 +62,7 @@ public class CouponDetailsActivity extends GoStyleActivity {
                 }
             }).execute();
 
-            setData(textName, textViewCode, textViewDeadLine, textViewDescription, imageView);
+
         }
         else
         {
