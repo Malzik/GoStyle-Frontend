@@ -18,8 +18,8 @@
 
         <activity android:name=".CouponDetailsActivity"/>
         <activity android:name=".GoStyleActivity"/>
-        <activity android:name=".CouponActivity"/>
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"/>
+            <activity android:name=".CouponActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
