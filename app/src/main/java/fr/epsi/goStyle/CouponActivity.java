@@ -2,15 +2,19 @@ package fr.epsi.goStyle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +23,7 @@ import fr.epsi.goStyle.model.Coupon;
 public class CouponActivity extends GoStyleActivity {
 
     private CouponAdapter adapter;
+    private ArrayList<Coupon> couponsSave;
     private ArrayList<Coupon> coupons;
 
     public static void display(AppCompatActivity activity){
@@ -32,6 +37,7 @@ public class CouponActivity extends GoStyleActivity {
         setContentView(R.layout.activity_accueil);
         super.initHeader(this);
         coupons=new ArrayList<>();
+        couponsSave=new ArrayList<>();
         ListView listView=findViewById(R.id.list_coupons);
         adapter=new CouponAdapter(this,R.layout.c_coupon,coupons);
         listView.setAdapter(adapter);
@@ -41,22 +47,51 @@ public class CouponActivity extends GoStyleActivity {
                 CouponDetailsActivity.display(CouponActivity.this,coupons.get(position));
             }
         });
-        String urlStr="http://192.168.43.49:8000/offers";
-
-        new HttpAskTask(urlStr, new HttpAskTask.HttpAsyTaskListener() {
+        SearchView searchView = findViewById(R.id.search_bar);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void webServiceDone(String result) {
-                initData(result);
+            public boolean onQueryTextSubmit(String query) {
+                searchOffer(query);
+                return true;
             }
 
             @Override
-            public void webServiceError(Exception e) {
-                displayToast(e.getMessage());
+            public boolean onQueryTextChange(String newText) {
+                searchOffer(newText);
+                return false;
             }
-        }).execute();
+        });
+        try {
+            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "offers";
 
+            new HttpAsyTask(url, "GET", null, goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+                @Override
+                public void webServiceDone(String result) {
+                    System.out.println(result);
+                    initData(result);
+                }
 
+                @Override
+                public void webServiceError(Exception e) {
+                    System.out.println(e.getMessage());
+                    displayToast(e.getMessage());
+                }
+            }).execute();
+        } catch (IOException e) {
+            displayToast(e.getMessage());
+        }
     }
+
+    private void searchOffer(String query) {
+        coupons.clear();
+        for (Coupon coupon: couponsSave) {
+            if(coupon.getName().toLowerCase().contains(query))
+                coupons.add(coupon);
+
+        }
+        adapter.notifyDataSetChanged();
+    }
+
 
     private void initData(String data) {
         try {
@@ -68,6 +103,7 @@ public class CouponActivity extends GoStyleActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        couponsSave.addAll(coupons);
         adapter.notifyDataSetChanged();
     }
 }

@@ -2,6 +2,7 @@ package fr.epsi.goStyle;
 
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -13,6 +14,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
@@ -74,38 +77,48 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
             }
             client.setRequestProperty("Content-Type", "application/json; utf-8");
             client.setRequestProperty("Accept", "application/json");
-            client.setDoOutput(true);
 
-            String jsonInputString = "{";
+            if(body != null) {
+                client.setDoOutput(true);
+                String jsonInputString = "{";
+                for (Map.Entry<String, String> entry : body.entrySet()) {
+                    if (!jsonInputString.equals("{"))
+                        jsonInputString = jsonInputString.concat(",");
+                    jsonInputString = jsonInputString.concat("\"" + entry.getKey() + "\"");
+                    jsonInputString = jsonInputString.concat(":");
+                    jsonInputString = jsonInputString.concat("\"" + entry.getValue() + "\"");
+                }
+                jsonInputString = jsonInputString.concat("}");
 
-            for (Map.Entry<String, String> entry : body.entrySet()) {
-                if(!jsonInputString.equals("{"))
-                    jsonInputString = jsonInputString.concat(",");
-                jsonInputString = jsonInputString.concat("\"" + entry.getKey() + "\"");
-                jsonInputString = jsonInputString.concat(":");
-                jsonInputString = jsonInputString.concat("\"" + entry.getValue() + "\"");
+                try(OutputStream os = client.getOutputStream()) {
+                    byte[] input = jsonInputString.getBytes(StandardCharsets.UTF_8);
+                    os.write(input, 0, input.length);
+                }
+                System.out.println(jsonInputString);
             }
-            jsonInputString = jsonInputString.concat("}");
-
-            try(OutputStream os = client.getOutputStream()) {
-                byte[] input = jsonInputString.getBytes("utf-8");
-                os.write(input, 0, input.length);
-            }
-            System.out.println(jsonInputString);
 
             int code = client.getResponseCode();
 
             if(code >= 300) {
-                return "{ \"erreurs\":\"" + code +  "\"}";
+                JSONObject errors = new JSONObject(convertStreamToString(client.getErrorStream()));
+                errors.put("status", errors.get("code"));
+                errors.put("message", errors.get("message"));
+                return errors;
             }
             else {
                 InputStream in = new BufferedInputStream(client.getInputStream());
                 String responseBody = convertStreamToString(in);
-                JSONObject result = new JSONObject(responseBody);
-                result.put("responseCode", client.getResponseCode());
-                return result.toString();
+                if(responseBody.startsWith("[")) {
+                    return new JSONArray(responseBody);
+                } else {
+                    return new JSONObject(responseBody);
+                }
             }
-        } finally {
+        }
+        catch (Exception e) {
+            System.out.println(e.getMessage());
+            return e;
+        } finally{
             if(client != null)
                 client.disconnect();
         }
@@ -116,13 +129,13 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
         try {
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
 
-            StringBuffer stringBuffer = new StringBuffer("");
+            StringBuilder stringBuffer = new StringBuilder();
             String line;
 
             String NL = System.getProperty("line.separator");
             while ((line = bufferedReader.readLine()) != null)
             {
-                stringBuffer.append(line + NL);
+                stringBuffer.append(line).append(NL);
             }
             bufferedReader.close();
             return stringBuffer.toString();

@@ -16,10 +16,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.internal.http.HttpCodec;
+import okhttp3.internal.http.HttpMethod;
 
 public class LoginActivity extends GoStyleActivity {
 
-    private TextView tokenView;
+    private TextView loginErrors;
 
     public static void display(AppCompatActivity activity){
         Intent intent=new Intent(activity, LoginActivity.class);
@@ -35,7 +37,7 @@ public class LoginActivity extends GoStyleActivity {
         final EditText passwordInput = findViewById(R.id.login_password);
         final Button loginButton = findViewById(R.id.connexion_button);
         final Button registerButton = findViewById(R.id.inscription_button);
-        this.tokenView = findViewById(R.id.token_text);
+        this.loginErrors = findViewById(R.id.login_errors);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,6 +55,9 @@ public class LoginActivity extends GoStyleActivity {
                     catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
+                }
+                else {
+                    loginErrors.setText("Les champs sont vides");
                 }
             }
         });
@@ -79,12 +84,13 @@ public class LoginActivity extends GoStyleActivity {
             public void webServiceDone(String result) {
                 try {
                     JSONObject jsonResult = new JSONObject(result);
-                    if(!jsonResult.has("erreurs")) {
-                        System.out.println(jsonResult.get("token").toString());
-                        setToken(jsonResult.get("token").toString());
+                    if(jsonResult.has("status") && Integer.parseInt(jsonResult.get("status").toString()) >= 400) {
+                        loginErrors.setText(jsonResult.get("message").toString());
                     }
                     else {
-                        System.out.println(jsonResult.get("status").toString());
+                        System.out.println(jsonResult.get("token").toString());
+                        setToken(jsonResult.get("token").toString());
+                        CouponActivity.display(LoginActivity.this);
                     }
                 }
                 catch (JSONException e) {
@@ -94,7 +100,7 @@ public class LoginActivity extends GoStyleActivity {
 
             @Override
             public void webServiceError(Exception e) {
-                // Gestion erreurs
+                System.out.println(e.getMessage());
             }
         }).execute();
     }
