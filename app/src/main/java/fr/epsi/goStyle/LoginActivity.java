@@ -16,6 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
+import okhttp3.internal.http.HttpCodec;
+import okhttp3.internal.http.HttpMethod;
 
 public class LoginActivity extends GoStyleActivity {
 
@@ -82,14 +84,13 @@ public class LoginActivity extends GoStyleActivity {
             public void webServiceDone(String result) {
                 try {
                     JSONObject jsonResult = new JSONObject(result);
-                    if(!jsonResult.has("erreurs")) {
+                    if(jsonResult.has("status") && Integer.parseInt(jsonResult.get("status").toString()) >= 400) {
+                        loginErrors.setText(jsonResult.get("message").toString());
+                    }
+                    else {
                         System.out.println(jsonResult.get("token").toString());
                         setToken(jsonResult.get("token").toString());
                         CouponActivity.display(LoginActivity.this);
-                    }
-                    else {
-                        loginErrors.setText("Mauvais identifiant et/ou mot de passe");
-                        System.out.println(jsonResult.get("erreurs").toString());
                     }
                 }
                 catch (JSONException e) {
@@ -99,7 +100,7 @@ public class LoginActivity extends GoStyleActivity {
 
             @Override
             public void webServiceError(Exception e) {
-                // Gestion erreurs
+                System.out.println(e.getMessage());
             }
         }).execute();
     }

@@ -62,7 +62,7 @@ public class CouponActivity extends GoStyleActivity {
         try {
             String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "offers";
 
-            new HttpAsyTask(url, "GET", null, null, new HttpAsyTask.HttpAsyTaskListener() {
+            new HttpAsyTask(url, "GET", null, goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
                 @Override
                 public void webServiceDone(String result) {
                     System.out.println(result);
