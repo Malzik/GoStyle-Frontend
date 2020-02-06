@@ -25,6 +25,12 @@
                 android:contentDescription="logo"
                 tools:srcCompat="@tools:sample/avatars" />
 
+            <TextView
+                android:id="@+id/register_firstname_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <EditText
                 android:id="@+id/register_firstname"
                 android:layout_width="wrap_content"
@@ -33,6 +39,12 @@
                 android:ems="10"
                 android:hint="Prenom"
                 android:inputType="text" />
+
+            <TextView
+                android:id="@+id/register_lastname_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/register_lastname"
@@ -43,6 +55,12 @@
                 android:hint="Nom"
                 android:inputType="textEmailAddress" />
 
+            <TextView
+                android:id="@+id/register_email_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <EditText
                 android:id="@+id/register_email"
                 android:layout_width="wrap_content"
@@ -52,6 +70,12 @@
                 android:hint="Email"
                 android:inputType="textEmailAddress" />
 
+            <TextView
+                android:id="@+id/register_password_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
             <EditText
                 android:id="@+id/register_password"
                 android:layout_width="wrap_content"
@@ -60,6 +84,12 @@
                 android:ems="10"
                 android:hint="Mot de passe"
                 android:inputType="textEmailAddress" />
+
+            <TextView
+                android:id="@+id/register_confirmation_error"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
 
             <EditText
                 android:id="@+id/confirmation_password"
