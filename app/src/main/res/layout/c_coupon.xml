@@ -10,7 +10,7 @@
 
         <ImageView
             android:id="@+id/imageViewCoupon"
-            android:layout_width="154dp"
+            android:layout_width="150dp"
             android:layout_height="80dp"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher" />
