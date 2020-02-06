@@ -105,33 +105,4 @@ public class ProfileViewActivity extends GoStyleActivity {
         }
     }
 
-    public void saveProfile(Map<String, String> parameters) {
-        try {
-            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "user";
-            new HttpAsyTask(url, "PUT", parameters, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
-                @Override
-                public void webServiceDone(String result) {
-                    try {
-                        JSONObject jsonResult = new JSONObject(result);
-                        if(!jsonResult.has("erreurs")) {
-                            ProfileViewActivity.display(ProfileViewActivity.this);
-                        }
-                        else {
-                            System.out.println("La requête n'a pas été traitée correctement");
-                        }
-                    }
-                    catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                @Override
-                public void webServiceError(Exception e) {
-                    System.out.println(e);
-                }
-            }).execute();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 }

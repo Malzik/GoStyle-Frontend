@@ -2,14 +2,18 @@ package fr.epsi.goStyle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +21,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileEditActivity extends GoStyleActivity {
 
+    private TextView emailError;
+    private TextView firstnameError;
+    private TextView lastnameError;
+
     public static void display(AppCompatActivity activity){
-        Intent intent=new Intent(activity, ProfileEditActivity.class);
+        Intent intent = new Intent(activity, ProfileEditActivity.class);
         activity.startActivity(intent);
     }
 
@@ -27,10 +35,14 @@ public class ProfileEditActivity extends GoStyleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
         super.initHeader(this);
+
+        this.emailError = findViewById(R.id.profile_email_error);
+        this.firstnameError = findViewById(R.id.profile_firstname_error);
+        this.lastnameError = findViewById(R.id.profile_lastname_error);
+
         final EditText email = findViewById(R.id.profile_email);
         final EditText firstname = findViewById(R.id.profile_firstname);
         final EditText lastname = findViewById(R.id.profile_lastname);
-        final EditText newPassword = findViewById(R.id.new_password);
         final Button saveProfile = findViewById(R.id.save_profile_button);
 
         this.updateProfile(this.goStyleApp.getToken(), email, firstname, lastname);
@@ -98,13 +110,18 @@ public class ProfileEditActivity extends GoStyleActivity {
             new HttpAsyTask(url, "PUT", parameters, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
                 @Override
                 public void webServiceDone(String result) {
+
                     try {
-                        JSONObject jsonResult = new JSONObject(result);
-                        if(!jsonResult.has("erreurs")) {
-                            ProfileEditActivity.display(ProfileEditActivity.this);
+                        if(result.startsWith("[")) {
+                            JSONArray jsonResult = new JSONArray(result);
+                            for (int i = 0; i < jsonResult.length() - 1; i++) {
+                                showErrors(jsonResult.getJSONObject(i));
+                            }
                         }
                         else {
-                            System.out.println("La requête n'a pas été traitée correctement");
+                            JSONObject jsonToken = new JSONObject();
+                            setNewToken(jsonToken.get("token").toString());
+                            ProfileViewActivity.display(ProfileEditActivity.this);
                         }
                     }
                     catch (JSONException e) {
@@ -119,6 +136,25 @@ public class ProfileEditActivity extends GoStyleActivity {
             }).execute();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void setNewToken(String token) {
+        this.goStyleApp.setToken(token);
+    }
+
+    public void showErrors(JSONObject error) throws JSONException {
+        String propertyPath = error.get("property_path").toString();
+        String errorMessage = error.get("message").toString();
+
+        if(propertyPath.equals("email")) {
+            this.emailError.setText(errorMessage);
+        }
+        else if(propertyPath.equals("first_name")) {
+            this.firstnameError.setText(errorMessage);
+        }
+        else if(propertyPath.equals("last_name")) {
+            this.lastnameError.setText(errorMessage);
         }
     }
 }

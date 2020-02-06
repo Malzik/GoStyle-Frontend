@@ -34,15 +34,18 @@ public class ScanActivity extends GoStyleActivity implements ZXingScannerView.Re
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         scannerView = new ZXingScannerView(this);
         setContentView(scannerView);
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA);
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             if (checkPermission()){
                 Toast.makeText(ScanActivity.this, "Permission accordée", Toast.LENGTH_LONG).show();
-            }
-            else {
-                requestPermissions();
             }
         }
     }
@@ -51,9 +54,7 @@ public class ScanActivity extends GoStyleActivity implements ZXingScannerView.Re
         return (ContextCompat.checkSelfPermission(ScanActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED);
     }
 
-    private void requestPermissions(){
-        ActivityCompat.requestPermissions(this, new String[]{CAMERA}, REQUEST_CAMERA);
-    }
+
 
     public void onRequestPermissionsResult(int requestCode, String permission[], int grantResults[]){
         switch (requestCode){
@@ -94,9 +95,6 @@ public class ScanActivity extends GoStyleActivity implements ZXingScannerView.Re
                 }
                 scannerView.setResultHandler(this);
                 scannerView.startCamera();
-            }
-            else {
-                requestPermissions();
             }
         }
     }

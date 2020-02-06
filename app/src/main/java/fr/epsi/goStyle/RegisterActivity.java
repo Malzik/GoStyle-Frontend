@@ -19,7 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class RegisterActivity extends AppCompatActivity {
 
-    private TextView registerErrors;
+    private TextView emailError;
+    private TextView firstnameError;
+    private TextView lastnameError;
+    private TextView passwordError;
+    private TextView confirmationError;
 
     public static void display(AppCompatActivity activity){
         Intent intent=new Intent(activity, RegisterActivity.class);
@@ -31,6 +35,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
+        this.emailError = findViewById(R.id.register_email_error);
+        this.firstnameError = findViewById(R.id.register_firstname_error);
+        this.lastnameError = findViewById(R.id.register_lastname_error);
+        this.passwordError = findViewById(R.id.register_password_error);
+        this.confirmationError = findViewById(R.id.register_confirmation_error);
+
         final Button register = findViewById(R.id.inscription_button);
         final Button login = findViewById(R.id.connexion_button);
         final EditText email = findViewById(R.id.register_email);
@@ -38,7 +48,6 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText lastname = findViewById(R.id.register_lastname);
         final EditText password = findViewById(R.id.register_password);
         final EditText confirmation = findViewById(R.id.confirmation_password);
-        this.registerErrors = findViewById(R.id.register_errors);
 
         register.setOnClickListener(new View.OnClickListener() {
 
@@ -50,7 +59,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String firstnameText = firstname.getText().toString();
                 String lastnameText = lastname.getText().toString();
                 if(emailText.isEmpty() || firstnameText.isEmpty() || lastnameText.isEmpty() || passwordText.isEmpty()) {
-                    registerErrors.setText("Certains champs sont vides");
                     return;
                 }
 
@@ -58,7 +66,7 @@ public class RegisterActivity extends AppCompatActivity {
                     register(emailText, firstnameText, lastnameText, passwordText);
                 }
                 else{
-                    registerErrors.setText("Les mots de passe ne correspondent pas");
+                    confirmationError.setText("Les mots de passe ne correspondent pas");
                 }
             }
         });
@@ -110,13 +118,18 @@ public class RegisterActivity extends AppCompatActivity {
     private void initErrors(JSONObject jsonObject) throws JSONException {
         switch (jsonObject.get("property_path").toString()) {
             case "email":
-                System.out.println(jsonObject.get("message").toString());
+                this.emailError.setText(jsonObject.get("message").toString());
+                break;
             case "first_name":
-                System.out.println(jsonObject.get("message").toString());
+                this.firstnameError.setText(jsonObject.get("message").toString());
+                break;
             case "last_name":
-                System.out.println(jsonObject.get("message").toString());
+                this.lastnameError.setText(jsonObject.get("message").toString());
+                break;
+
             case "password":
-                System.out.println(jsonObject.get("message").toString());
+                this.passwordError.setText(jsonObject.get("message").toString());
+                break;
         }
     }
 }
