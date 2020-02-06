@@ -1,9 +1,7 @@
 package fr.epsi.goStyle;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,7 +43,7 @@ public class GoStyleActivity extends AppCompatActivity {
         profil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ProfileActivity.display(activity);
+                ProfileViewActivity.display(activity);
             }
         });
 

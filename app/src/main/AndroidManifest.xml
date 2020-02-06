@@ -31,7 +31,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".ProfileActivity" />
+        <activity android:name=".ProfileEditActivity" />
+        <activity android:name=".ProfileViewActivity" />
+        <activity android:name=".ProfilePasswordActivity" />
 
         <meta-data
             android:name="preloaded_fonts"

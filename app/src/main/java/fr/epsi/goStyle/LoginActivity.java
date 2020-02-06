@@ -17,8 +17,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
-import okhttp3.internal.http.HttpCodec;
-import okhttp3.internal.http.HttpMethod;
 
 public class LoginActivity extends GoStyleActivity {
 
