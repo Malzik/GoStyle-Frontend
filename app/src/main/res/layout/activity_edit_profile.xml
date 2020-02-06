@@ -28,21 +28,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:textSize="26sp"
-                    android:text="Adresse e-mail" />
+                    android:text="Adresse e-mail"
+                    android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/profile_email_error"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/profile_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="Email" />
+                    android:hint="Email"
+                    android:inputType="textEmailAddress" />
 
                 <TextView
                     android:id="@+id/textView3"
@@ -51,6 +58,11 @@
                     android:gravity="center"
                     android:text="Nom"
                     android:textSize="26sp" />
+
+                <TextView
+                    android:id="@+id/profile_lastname_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <EditText
                     android:id="@+id/profile_lastname"
@@ -67,12 +79,18 @@
                     android:text="Prenom"
                     android:textSize="26sp" />
 
+                <TextView
+                    android:id="@+id/profile_firstname_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
                 <EditText
                     android:id="@+id/profile_firstname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:hint="Prenom" />
+
 
                 <Button
                     android:id="@+id/save_profile_button"
