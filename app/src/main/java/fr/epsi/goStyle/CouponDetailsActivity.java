@@ -2,6 +2,8 @@ package fr.epsi.goStyle;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.epsi.goStyle.model.Coupon;
@@ -42,13 +45,26 @@ public class CouponDetailsActivity extends GoStyleActivity {
         TextView textViewDeadLine= findViewById(R.id.textViewDeadLineDetails);
         TextView textViewDescription = findViewById(R.id.textViewDescriptionDetails);
         ImageView imageView= findViewById(R.id.imageViewCouponDetails);
+        Button btnAddOffers = findViewById(R.id.add_offers);
         qrcode = (String) getIntent().getExtras().get("qrcode");
+
+        btnAddOffers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    addOffers(coupon.getCode());
+                } catch (IOException e) {
+                    System.out.println("Le coupon n'a pas été enregistrer");
+                }
+            }
+        });
+
 
         if (qrcode != null){
             try {
                 String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "offers/" + qrcode;
 
-                new HttpAsyTask(url, "GET", null, goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+                new HttpAsyTask(url, "GET", null, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
                     @Override
                     public void webServiceDone(String result) {
                         TextView textName = findViewById(R.id.textViewNameDetails);
@@ -76,6 +92,23 @@ public class CouponDetailsActivity extends GoStyleActivity {
             setData(textName, textViewCode, textViewDeadLine, textViewDescription, imageView);
         }
         setTitle("Détails");
+    }
+
+    private void addOffers(String code) throws IOException {
+        String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "offers/" + code;
+        new HttpAsyTask(url, "GET", null, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+            @Override
+            public void webServiceDone(String result) {
+                System.out.println(result);
+                CouponActivity.display(CouponDetailsActivity.this);
+            }
+
+            @Override
+            public void webServiceError(Exception e) {
+                System.out.println(e.getMessage());
+                displayToast(e.getMessage());
+            }
+        }).execute();
     }
 
     private void setData(TextView textName, TextView textViewCode, TextView textViewDeadLine, TextView textViewDescription, ImageView imageView){
