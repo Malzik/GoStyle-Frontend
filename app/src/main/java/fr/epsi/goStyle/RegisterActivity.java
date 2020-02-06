@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -82,13 +83,13 @@ public class RegisterActivity extends AppCompatActivity {
                 @Override
                 public void webServiceDone(String result) {
                     try {
-                        JSONObject jsonResult = new JSONObject(result);
-                        if(result.length() > 1) {
+                        if(result.startsWith("[")) {
+                            JSONArray errors = new JSONArray(result);
+                            for(int i=0;i<errors.length();i++){
+                                initErrors(errors.getJSONObject(i));
+                            }
+                        } else {
                             LoginActivity.display(RegisterActivity.this);
-                        }
-                        else {
-                            System.out.println(jsonResult.get("erreurs").toString());
-                            registerErrors.setText("Le formulaire est invalide");
                         }
                     }
                     catch (JSONException e) {
@@ -98,11 +99,24 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void webServiceError(Exception e) {
-                    // Gestion erreurs
+                    System.out.println(e.getMessage());
                 }
             }).execute();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void initErrors(JSONObject jsonObject) throws JSONException {
+        switch (jsonObject.get("property_path").toString()) {
+            case "email":
+                System.out.println(jsonObject.get("message").toString());
+            case "first_name":
+                System.out.println(jsonObject.get("message").toString());
+            case "last_name":
+                System.out.println(jsonObject.get("message").toString());
+            case "password":
+                System.out.println(jsonObject.get("message").toString());
         }
     }
 }

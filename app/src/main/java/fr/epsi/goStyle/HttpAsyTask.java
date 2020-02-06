@@ -100,10 +100,15 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
             int code = client.getResponseCode();
 
             if(code >= 300) {
-                JSONObject errors = new JSONObject(convertStreamToString(client.getErrorStream()));
-                errors.put("status", errors.get("code"));
-                errors.put("message", errors.get("message"));
-                return errors;
+                String responseBody = convertStreamToString(client.getErrorStream());
+                if(responseBody.startsWith("[")) {
+                    return new JSONArray(responseBody);
+                } else {
+                    JSONObject errors = new JSONObject();
+                    errors.put("status", errors.get("code"));
+                    errors.put("message", errors.get("message"));
+                    return errors;
+                }
             }
             else {
                 InputStream in = new BufferedInputStream(client.getInputStream());
