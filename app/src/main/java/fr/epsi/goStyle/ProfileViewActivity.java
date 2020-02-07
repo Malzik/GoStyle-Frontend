@@ -79,7 +79,7 @@ public class ProfileViewActivity extends GoStyleActivity {
 
 
                             JSONArray jsonArray= jsonResult.getJSONArray("offers");
-                            for(int i=0; i < jsonArray.length() - 1 ; i++){
+                            for(int i=0; i < jsonArray.length(); i++){
                                 Coupon coupon = new Coupon(jsonArray.getJSONObject(i));
                                 coupons.add(coupon);
                                 adapter.notifyDataSetChanged();
