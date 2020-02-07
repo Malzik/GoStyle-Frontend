@@ -36,7 +36,8 @@ public class GoStyleActivity extends AppCompatActivity {
         home.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CouponActivity.display(activity);
+                System.out.println("Click");
+                activity.finish();
             }
         });
         profil = findViewById(R.id.profil_image);

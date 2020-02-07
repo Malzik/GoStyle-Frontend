@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -36,6 +37,8 @@ public class CouponActivity extends GoStyleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
         super.initHeader(this);
+        ImageView backButton = findViewById(R.id.home_button);
+        backButton.setVisibility(View.GONE);
         coupons=new ArrayList<>();
         couponsSave=new ArrayList<>();
         ListView listView=findViewById(R.id.list_coupons);
