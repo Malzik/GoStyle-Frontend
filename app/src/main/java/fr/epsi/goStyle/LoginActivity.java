@@ -46,7 +46,7 @@ public class LoginActivity extends GoStyleActivity {
 
                 if(!email.isEmpty() && !password.isEmpty()) {
                     try {
-                        LoginActivity.this.login(email, password);
+                        login(email, password);
                     }
                     catch (SQLException e) {
                         e.printStackTrace();
