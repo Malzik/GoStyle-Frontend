@@ -16,7 +16,7 @@
         android:fontFamily="@font/open_sans_semibold"
         android:text="Coupons de réduction"
         android:textColor="#82C7FF"
-        android:textSize="25sp" />
+        android:textSize="30sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,8 +30,9 @@
             android:id="@+id/mes_coupons2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:text="Saisir manuellement son code" />
+            android:fontFamily="@font/open_sans_light"
+            android:text="Recherche parmis les code disponible"
+            android:textSize="18sp" />
 
         <SearchView
             android:id="@+id/search_bar"

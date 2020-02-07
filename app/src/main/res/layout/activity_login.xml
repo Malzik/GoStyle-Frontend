@@ -4,7 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/color_login"
     android:orientation="horizontal">
+
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,31 +20,34 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/TitreLogin"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="logo"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:layout_marginBottom="80dp"
+                android:fontFamily="@font/bangers"
+                android:gravity="center"
+                android:text="GoStyle"
+                android:textColor="@android:color/white"
+                android:textSize="45sp" />
 
             <EditText
                 android:id="@+id/login_email"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textEmailAddress"
-                android:hint="Email" />
+                android:hint="Email"
+                android:inputType="textEmailAddress" />
 
             <EditText
                 android:id="@+id/login_password"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
-                android:inputType="textPassword"
-                android:hint="Mot de passe" />
+                android:hint="Mot de passe"
+                android:inputType="textPassword" />
 
             <TextView
                 android:id="@+id/login_errors"
@@ -57,20 +63,29 @@
 
                 <Button
                     android:id="@+id/connexion_button"
-                    android:layout_width="wrap_content"
+                    android:layout_width="300dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
                     android:layout_weight="1"
-                    android:text="Connexion" />
+                    android:background="#0076D7"
+                    android:fontFamily="@font/open_sans_condensed_bold"
+                    android:text="Connexion"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
 
             </LinearLayout>
 
             <Button
                 android:id="@+id/inscription_button"
-                android:layout_width="wrap_content"
+                android:layout_width="175dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:text="Inscription" />
+                android:background="#008CFF"
+                android:fontFamily="@font/open_sans_semibold_italic"
+                android:text="Inscription"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
 
         </LinearLayout>

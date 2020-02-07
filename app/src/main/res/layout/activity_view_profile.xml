@@ -18,12 +18,14 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="Profil"
-                android:textSize="26sp" />
+                android:textColor="#82C7FF"
+                android:textSize="30sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,54 +37,69 @@
 
                 <TextView
                     android:id="@+id/p_view_lastname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:gravity="center"
                     android:text="Nom"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/p_view_firstname"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="Prénom"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
                 <TextView
                     android:id="@+id/p_view_email"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:text="Email"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <Button
                     android:id="@+id/edit_profile"
-                    android:layout_width="wrap_content"
+                    android:layout_width="175dp"
                     android:layout_height="wrap_content"
+                    android:background="#82C7FF"
+                    android:fontFamily="@font/open_sans_condensed_bold"
                     android:text="Modifier profil" />
 
                 <Button
                     android:id="@+id/edit_password"
-                    android:layout_width="wrap_content"
+                    android:layout_width="175dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:background="#82C7FF"
+                    android:fontFamily="@font/open_sans_condensed_bold"
                     android:text="Modifier mot de passe" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/open_sans_semibold"
                 android:text="Mes coupons"
-                android:textSize="24sp" />
+                android:textColor="#82C7FF"
+                android:textSize="30sp" />
 
         </LinearLayout>
     </ScrollView>

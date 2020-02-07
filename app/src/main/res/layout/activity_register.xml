@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/color_login"
     android:orientation="horizontal">
 
     <ScrollView
@@ -17,13 +18,17 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/logo"
-                android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/TitreRegister"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:contentDescription="logo"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:layout_marginBottom="80dp"
+                android:fontFamily="@font/bangers"
+                android:gravity="center"
+                android:text="Inscription"
+                android:textColor="@android:color/white"
+                android:textSize="45sp" />
+
 
             <TextView
                 android:id="@+id/register_firstname_error"
@@ -33,7 +38,7 @@
 
             <EditText
                 android:id="@+id/register_firstname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -48,7 +53,7 @@
 
             <EditText
                 android:id="@+id/register_lastname"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -63,7 +68,7 @@
 
             <EditText
                 android:id="@+id/register_email"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -78,7 +83,7 @@
 
             <EditText
                 android:id="@+id/register_password"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_weight="1"
                 android:ems="10"
@@ -93,7 +98,7 @@
 
             <EditText
                 android:id="@+id/confirmation_password"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
@@ -108,18 +113,27 @@
 
             <Button
                 android:id="@+id/inscription_button"
-                android:layout_width="wrap_content"
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:layout_weight="1"
-                android:text="Inscription" />
+                android:background="#0076D7"
+                android:fontFamily="@font/open_sans_condensed_bold"
+                android:text="Inscription"
+                android:textColor="#FFFFFF"
+                android:textSize="24sp" />
 
             <Button
                 android:id="@+id/connexion_button"
-                android:layout_width="wrap_content"
+                android:layout_width="175dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="15dp"
                 android:layout_weight="1"
-                android:text="Connexion" />
+                android:background="#008CFF"
+                android:fontFamily="@font/open_sans_semibold_italic"
+                android:text="Retour"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp" />
 
 
         </LinearLayout>
