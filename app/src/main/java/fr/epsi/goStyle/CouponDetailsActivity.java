@@ -40,6 +40,7 @@ public class CouponDetailsActivity extends GoStyleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_coupon_details);
         super.initHeader(this);
+
         TextView textName = findViewById(R.id.textViewNameDetails);
         TextView textViewCode= findViewById(R.id.textViewCodeDetails);
         TextView textViewDeadLine= findViewById(R.id.textViewDeadLineDetails);

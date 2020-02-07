@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class GoStyleApp extends Application {
+
     private String title="";
     private String token;
     @Override

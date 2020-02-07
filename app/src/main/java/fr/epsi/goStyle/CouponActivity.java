@@ -37,8 +37,11 @@ public class CouponActivity extends GoStyleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accueil);
         super.initHeader(this);
+
         ImageView backButton = findViewById(R.id.home_button);
         backButton.setVisibility(View.GONE);
+
+
         coupons=new ArrayList<>();
         couponsSave=new ArrayList<>();
         ListView listView=findViewById(R.id.list_coupons);
@@ -47,9 +50,12 @@ public class CouponActivity extends GoStyleActivity {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                CouponDetailsActivity.display(CouponActivity.this,coupons.get(position));
+                CouponDetailsActivity.display(CouponActivity.this, coupons.get(position));
             }
         });
+
+
+
         SearchView searchView = findViewById(R.id.search_bar);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

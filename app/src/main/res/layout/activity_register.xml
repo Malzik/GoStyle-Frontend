@@ -58,7 +58,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Nom"
-                android:inputType="textEmailAddress" />
+                android:inputType="text" />
 
             <TextView
                 android:id="@+id/register_email_error"
@@ -88,7 +88,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="Mot de passe"
-                android:inputType="textEmailAddress" />
+                android:inputType="textWebPassword" />
 
             <TextView
                 android:id="@+id/register_confirmation_error"

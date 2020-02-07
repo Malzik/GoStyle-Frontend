@@ -119,8 +119,9 @@ public class ProfileEditActivity extends GoStyleActivity {
                             }
                         }
                         else {
-                            JSONObject jsonToken = new JSONObject();
+                            JSONObject jsonToken = new JSONObject(result);
                             setNewToken(jsonToken.get("token").toString());
+                            displayToast("Le profil à été mis à jour");
                             ProfileViewActivity.display(ProfileEditActivity.this);
                         }
                     }
