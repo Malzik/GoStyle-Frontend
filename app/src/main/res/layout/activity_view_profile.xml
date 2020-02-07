@@ -77,18 +77,20 @@
                     android:id="@+id/edit_profile"
                     android:layout_width="175dp"
                     android:layout_height="wrap_content"
-                    android:background="#82C7FF"
-                    android:fontFamily="@font/open_sans_condensed_bold"
-                    android:text="Modifier profil" />
+                    android:background="@drawable/border_radius"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="Modifier profil"
+                    android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/edit_password"
                     android:layout_width="175dp"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:background="#82C7FF"
-                    android:fontFamily="@font/open_sans_condensed_bold"
-                    android:text="Modifier mot de passe" />
+                    android:background="@drawable/border_radius"
+                    android:fontFamily="@font/open_sans_semibold"
+                    android:text="Modifier mot de passe"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <TextView
