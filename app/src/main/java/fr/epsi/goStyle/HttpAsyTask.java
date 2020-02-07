@@ -115,8 +115,10 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
                 String responseBody = convertStreamToString(in);
                 if(responseBody.startsWith("[")) {
                     return new JSONArray(responseBody);
-                } else {
+                } else if(!responseBody.isEmpty()) {
                     return new JSONObject(responseBody);
+                } else {
+                    return "";
                 }
             }
         }

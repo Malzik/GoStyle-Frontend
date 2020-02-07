@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -17,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfilePasswordActivity extends GoStyleActivity {
 
+    private TextView newPasswordError;
+
     public static void display(AppCompatActivity activity){
         Intent intent=new Intent(activity, ProfilePasswordActivity.class);
         activity.startActivity(intent);
@@ -27,6 +31,8 @@ public class ProfilePasswordActivity extends GoStyleActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_password);
         super.initHeader(this);
+
+        this.newPasswordError = findViewById(R.id.new_password);
 
         final EditText newPassword = findViewById(R.id.new_password);
         final EditText oldPassword = findViewById(R.id.oldPassword);
@@ -53,17 +59,22 @@ public class ProfilePasswordActivity extends GoStyleActivity {
 
     public void saveProfile(Map<String, String> parameters) {
         try {
-            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "password";
+            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "user/password";
             new HttpAsyTask(url, "PUT", parameters, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
                 @Override
                 public void webServiceDone(String result) {
                     try {
-                        JSONObject jsonResult = new JSONObject(result);
-                        if(!jsonResult.has("erreurs")) {
-                            ProfileEditActivity.display(ProfilePasswordActivity.this);
+                        if(!result.isEmpty() && result.startsWith("[")) {
+                            JSONArray errors = new JSONArray(result);
+                            for(int i=0;i<errors.length();i++){
+                                if(errors.getJSONObject(i).get("property_path").toString().equals("password")) {
+                                    newPasswordError.setText(errors.getJSONObject(i).get("message").toString());
+                                }
+                            }
                         }
                         else {
-                            System.out.println("La requête n'a pas été traitée correctement");
+                            displayToast("Le mot de passe à été mis à jour");
+                            ProfileEditActivity.display(ProfilePasswordActivity.this);
                         }
                     }
                     catch (JSONException e) {

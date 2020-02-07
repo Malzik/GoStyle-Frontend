@@ -15,6 +15,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.sql.SQLOutput;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import fr.epsi.goStyle.model.Coupon;
@@ -96,8 +98,10 @@ public class CouponDetailsActivity extends GoStyleActivity {
     }
 
     private void addOffers(String code) throws IOException {
-        String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "offers/" + code;
-        new HttpAsyTask(url, "GET", null, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+        String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "user/addoffer";
+        Map<String, String> offer = new HashMap<>();
+        offer.put("code", code);
+        new HttpAsyTask(url, "PUT", offer, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
             @Override
             public void webServiceDone(String result) {
                 System.out.println(result);
