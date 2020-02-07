@@ -18,22 +18,29 @@
             android:orientation="vertical" >
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="26sp"
-                android:gravity="center"
-                android:text="Profil" />
+                android:layout_gravity="center"
+                android:layout_margin="4dp"
+                android:fontFamily="@font/open_sans_condensed_bold"
+                android:text="Modifier mon profil"
+                android:textColor="#82C7FF"
+                android:textSize="35sp" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="40dp"
                 android:orientation="vertical">
+
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_condensed_bold"
                     android:gravity="center"
                     android:text="Adresse e-mail"
                     android:textSize="26sp" />
@@ -43,18 +50,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
+
                 <EditText
                     android:id="@+id/profile_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
                     android:gravity="center"
-                    android:hint="Email"
+                    android:hint="Tapez votre email..."
                     android:inputType="textEmailAddress" />
 
                 <TextView
-                    android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_condensed_bold"
                     android:gravity="center"
                     android:text="Nom"
                     android:textSize="26sp" />
@@ -68,13 +77,14 @@
                     android:id="@+id/profile_lastname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
                     android:gravity="center"
-                    android:hint="Nom" />
+                    android:hint="Tapez votre nom ..." />
 
                 <TextView
-                    android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_condensed_bold"
                     android:gravity="center"
                     android:text="Prenom"
                     android:textSize="26sp" />
@@ -88,18 +98,51 @@
                     android:id="@+id/profile_firstname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/open_sans_light"
                     android:gravity="center"
-                    android:hint="Prenom" />
+                    android:hint="Tapez votre prénom ..." />
 
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center|bottom"
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/save_profile_button"
-                    android:layout_width="match_parent"
+                    android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:background="#88C3F1"
-                    android:text="Sauvegarder" />
-
-
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="25dp"
+                    android:background="#82C7FF"
+                    android:fontFamily="@font/bangers"
+                    android:text="Modifier"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

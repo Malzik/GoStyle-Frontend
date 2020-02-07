@@ -13,10 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="4dp"
-        android:fontFamily="@font/open_sans_semibold"
+        android:fontFamily="@font/open_sans_condensed_bold"
         android:text="Coupons de réduction"
         android:textColor="#82C7FF"
-        android:textSize="30sp" />
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
