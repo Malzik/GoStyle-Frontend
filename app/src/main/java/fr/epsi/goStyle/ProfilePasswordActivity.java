@@ -32,10 +32,11 @@ public class ProfilePasswordActivity extends GoStyleActivity {
         setContentView(R.layout.activity_edit_password);
         super.initHeader(this);
 
-        this.newPasswordError = findViewById(R.id.new_password);
+        this.newPasswordError = findViewById(R.id.newPassword_error);
 
         final EditText newPassword = findViewById(R.id.new_password);
         final EditText oldPassword = findViewById(R.id.oldPassword);
+        final EditText newPasswordConfirmation = findViewById(R.id.new_password_confirmation);
         final Button savePassword = findViewById(R.id.save_password_button);
 
         savePassword.setOnClickListener(new View.OnClickListener() {
@@ -44,6 +45,12 @@ public class ProfilePasswordActivity extends GoStyleActivity {
 
                 String newPasswordText = newPassword.getText().toString();
                 String oldPasswordText = oldPassword.getText().toString();
+                String newPasswordConfirmationText = newPasswordConfirmation.getText().toString();
+
+                if(!newPasswordConfirmationText.equals(newPassword)) {
+                    newPasswordError.setText("Les mots de passe ne correspondent pas");
+                    return;
+                }
 
                 if(!newPasswordText.isEmpty() && !oldPasswordText.isEmpty()) {
                     Map<String, String> parameters = new HashMap<>();

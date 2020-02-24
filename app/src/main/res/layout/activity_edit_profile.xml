@@ -71,7 +71,8 @@
                 <TextView
                     android:id="@+id/profile_lastname_error"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
 
                 <EditText
                     android:id="@+id/profile_lastname"
@@ -92,7 +93,8 @@
                 <TextView
                     android:id="@+id/profile_firstname_error"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center" />
 
                 <EditText
                     android:id="@+id/profile_firstname"
