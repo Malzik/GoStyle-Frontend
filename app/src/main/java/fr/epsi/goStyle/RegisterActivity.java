@@ -58,9 +58,6 @@ public class RegisterActivity extends AppCompatActivity {
                 String emailText = email.getText().toString();
                 String firstnameText = firstname.getText().toString();
                 String lastnameText = lastname.getText().toString();
-                if(emailText.isEmpty() || firstnameText.isEmpty() || lastnameText.isEmpty() || passwordText.isEmpty()) {
-                    return;
-                }
 
                 if(passwordText.equals(confirmationText)) {
                     register(emailText, firstnameText, lastnameText, passwordText);
@@ -126,7 +123,6 @@ public class RegisterActivity extends AppCompatActivity {
             case "last_name":
                 this.lastnameError.setText(jsonObject.get("message").toString());
                 break;
-
             case "password":
                 this.passwordError.setText(jsonObject.get("message").toString());
                 break;

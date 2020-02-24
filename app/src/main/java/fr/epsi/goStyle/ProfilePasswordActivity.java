@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,7 +34,6 @@ public class ProfilePasswordActivity extends GoStyleActivity {
         this.newPasswordError = findViewById(R.id.newPassword_error);
 
         final EditText newPassword = findViewById(R.id.new_password);
-        final EditText oldPassword = findViewById(R.id.oldPassword);
         final EditText newPasswordConfirmation = findViewById(R.id.new_password_confirmation);
         final Button savePassword = findViewById(R.id.save_password_button);
 
@@ -44,27 +42,28 @@ public class ProfilePasswordActivity extends GoStyleActivity {
             public void onClick(View v) {
 
                 String newPasswordText = newPassword.getText().toString();
-                String oldPasswordText = oldPassword.getText().toString();
                 String newPasswordConfirmationText = newPasswordConfirmation.getText().toString();
 
-                if(!newPasswordConfirmationText.equals(newPassword)) {
+                if(newPasswordText.isEmpty()) {
                     newPasswordError.setText("Les mots de passe ne correspondent pas");
                     return;
                 }
 
-                if(!newPasswordText.isEmpty() && !oldPasswordText.isEmpty()) {
+                if(newPasswordConfirmationText.equals(newPasswordText)) {
                     Map<String, String> parameters = new HashMap<>();
                     parameters.put("new_password", newPasswordText);
-                    parameters.put("password", oldPasswordText);
-                    saveProfile(parameters);
+                    savePassword(parameters);
                 }
+
+
             }
         });
 
     }
 
 
-    public void saveProfile(Map<String, String> parameters) {
+
+    public void savePassword(Map<String, String> parameters) {
         try {
             String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "user/password";
             new HttpAsyTask(url, "PUT", parameters, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
@@ -81,7 +80,7 @@ public class ProfilePasswordActivity extends GoStyleActivity {
                         }
                         else {
                             displayToast("Le mot de passe à été mis à jour");
-                            ProfileEditActivity.display(ProfilePasswordActivity.this);
+                            ProfileViewActivity.display(ProfilePasswordActivity.this);
                         }
                     }
                     catch (JSONException e) {

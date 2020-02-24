@@ -126,6 +126,7 @@ public class CouponDetailsActivity extends GoStyleActivity {
 
     private void initData(String data) {
         try {
+            System.out.println("Données :" + data);
             JSONObject jsonObject= new JSONObject(data);
             coupon = new Coupon(jsonObject);
         } catch (JSONException e) {

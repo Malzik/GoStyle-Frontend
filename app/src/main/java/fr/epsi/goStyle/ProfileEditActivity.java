@@ -112,9 +112,8 @@ public class ProfileEditActivity extends GoStyleActivity {
                 public void webServiceDone(String result) {
 
                     try {
-                        if(result.startsWith("[")) {
+                        if(!result.isEmpty() && result.startsWith("[")) {
                             JSONArray jsonResult = new JSONArray(result);
-                            System.out.println("erbsetbe :" + jsonResult);
                             for (int i = 0; i < jsonResult.length(); i++) {
                                 showErrors(jsonResult.getJSONObject(i));
                             }

@@ -94,7 +94,7 @@ public class CouponActivity extends GoStyleActivity {
     private void searchOffer(String query) {
         coupons.clear();
         for (Coupon coupon: couponsSave) {
-            if(coupon.getName().toLowerCase().contains(query))
+            if(coupon.getName().toLowerCase().contains(query.toLowerCase()))
                 coupons.add(coupon);
 
         }
