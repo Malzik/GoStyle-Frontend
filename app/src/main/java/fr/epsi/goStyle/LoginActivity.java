@@ -44,19 +44,20 @@ public class LoginActivity extends GoStyleActivity {
                 String email = emailInput.getText().toString();
                 String password = passwordInput.getText().toString();
 
-                if(!email.isEmpty() && !password.isEmpty()) {
-                    try {
-                        login(email, password);
-                    }
-                    catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    catch (MalformedURLException e) {
-                        e.printStackTrace();
-                    }
+
+                if(email.isEmpty() || password.isEmpty()) {
+                    displayToast("Certains champs sont vides");
+                    return;
                 }
-                else {
-                    loginErrors.setText("Les champs sont vides");
+
+                try {
+                    login(email, password);
+                }
+                catch (SQLException e) {
+                    displayToast("La requête n'a pas pu être traitée");
+                }
+                catch (MalformedURLException e) {
+                    displayToast("Connexion impossible");
                 }
             }
         });
@@ -76,7 +77,7 @@ public class LoginActivity extends GoStyleActivity {
     protected void login(String email, String password) throws SQLException, MalformedURLException {
         try {
             String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "login";
-            Map<String, String> loginValue = new HashMap<>();
+            final Map<String, String> loginValue = new HashMap<>();
             loginValue.put("email", email);
             loginValue.put("password", password);
             new HttpAsyTask(url, "POST", loginValue, null, new HttpAsyTask.HttpAsyTaskListener() {
@@ -84,7 +85,8 @@ public class LoginActivity extends GoStyleActivity {
                 public void webServiceDone(String result) {
                     try {
                         JSONObject jsonResult = new JSONObject(result);
-                        if(jsonResult.has("status") && Integer.parseInt(jsonResult.get("status").toString()) >= 400) {
+                        System.out.println(jsonResult.toString());
+                        if(jsonResult.has("code") && Integer.parseInt(jsonResult.get("code").toString()) >= 400) {
                             loginErrors.setText(jsonResult.get("message").toString());
                         }
                         else {

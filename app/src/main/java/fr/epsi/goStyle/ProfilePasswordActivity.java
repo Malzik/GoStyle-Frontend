@@ -66,7 +66,7 @@ public class ProfilePasswordActivity extends GoStyleActivity {
                     try {
                         if(!result.isEmpty() && result.startsWith("[")) {
                             JSONArray errors = new JSONArray(result);
-                            for(int i=0;i<errors.length();i++){
+                            for(int i=0; i < errors.length(); i++){
                                 if(errors.getJSONObject(i).get("property_path").toString().equals("password")) {
                                     newPasswordError.setText(errors.getJSONObject(i).get("message").toString());
                                 }

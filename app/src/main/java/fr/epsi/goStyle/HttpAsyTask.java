@@ -104,10 +104,7 @@ public class HttpAsyTask extends AsyncTask<Void,Void,Object> {
                 if(responseBody.startsWith("[")) {
                     return new JSONArray(responseBody);
                 } else {
-                    JSONObject errors = new JSONObject();
-                    errors.put("status", errors.get("code"));
-                    errors.put("message", errors.get("message"));
-                    return errors;
+                    return new JSONObject(responseBody);
                 }
             }
             else {

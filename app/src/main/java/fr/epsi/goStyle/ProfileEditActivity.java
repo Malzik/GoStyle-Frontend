@@ -86,7 +86,7 @@ public class ProfileEditActivity extends GoStyleActivity {
                             lastname.setText(jsonResult.get("last_name").toString());
                         }
                         else {
-                            System.out.println("L'utilisateur n'a pas pu être récupérer");
+                            displayToast("L'utilisateur n'a pas pu être récupérer");
                         }
                     }
                     catch (JSONException e) {
@@ -114,7 +114,8 @@ public class ProfileEditActivity extends GoStyleActivity {
                     try {
                         if(result.startsWith("[")) {
                             JSONArray jsonResult = new JSONArray(result);
-                            for (int i = 0; i < jsonResult.length() - 1; i++) {
+                            System.out.println("erbsetbe :" + jsonResult);
+                            for (int i = 0; i < jsonResult.length(); i++) {
                                 showErrors(jsonResult.getJSONObject(i));
                             }
                         }
@@ -145,16 +146,20 @@ public class ProfileEditActivity extends GoStyleActivity {
     }
 
     public void showErrors(JSONObject error) throws JSONException {
+        System.out.println(error);
         String propertyPath = error.get("property_path").toString();
         String errorMessage = error.get("message").toString();
 
         if(propertyPath.equals("email")) {
+            System.out.println("Messaggeeee email");
             this.emailError.setText(errorMessage);
         }
         else if(propertyPath.equals("first_name")) {
+            System.out.println("Fistinnnng");
             this.firstnameError.setText(errorMessage);
         }
         else if(propertyPath.equals("last_name")) {
+            System.out.println("Lassssst");
             this.lastnameError.setText(errorMessage);
         }
     }
