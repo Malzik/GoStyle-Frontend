@@ -9,16 +9,13 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.HashMap;
 import java.util.Map;
 
-import androidx.appcompat.app.AppCompatActivity;
 import fr.epsi.goStyle.model.Coupon;
 
 public class CouponDetailsActivity extends GoStyleActivity {
@@ -104,8 +101,25 @@ public class CouponDetailsActivity extends GoStyleActivity {
         new HttpAsyTask(url, "PUT", offer, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
             @Override
             public void webServiceDone(String result) {
-                System.out.println(result);
-                CouponActivity.display(CouponDetailsActivity.this);
+
+                JSONObject jsonResult = null;
+                try {
+                    if(result.isEmpty()) {
+                        displayToast("Le coupon a été ajouter");
+                    }
+                    else {
+                        jsonResult = new JSONObject(result);
+                        if(jsonResult.has("code") && Integer.parseInt(jsonResult.get("code").toString()) >= 300) {
+                            displayToast(jsonResult.get("message").toString());
+                        } else {
+                            displayToast("Une erreur est survenue");
+                        }
+                    }
+                    CouponActivity.display(CouponDetailsActivity.this);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
@@ -126,10 +140,10 @@ public class CouponDetailsActivity extends GoStyleActivity {
 
     private void initData(String data) {
         try {
-            System.out.println("Données :" + data);
             JSONObject jsonObject= new JSONObject(data);
             coupon = new Coupon(jsonObject);
-        } catch (JSONException e) {
+        }
+        catch (JSONException e) {
             e.printStackTrace();
         }
     }

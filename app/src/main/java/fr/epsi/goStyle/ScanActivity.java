@@ -5,19 +5,18 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.google.zxing.Result;
+
+import java.io.IOException;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import fr.epsi.goStyle.model.Coupon;
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 import static android.Manifest.permission_group.CAMERA;
@@ -117,24 +116,25 @@ public class ScanActivity extends GoStyleActivity implements ZXingScannerView.Re
     @Override
     public void handleResult(Result result) {
         final String scanResult = result.getText();
-        CouponDetailsActivity.display(ScanActivity.this, scanResult);
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Résultat du Scan");
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                scannerView.resumeCameraPreview(ScanActivity.this);
-            }
-        });
-        builder.setNeutralButton("Visiter", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(scanResult));
-                startActivity(intent);
-            }
-        });
-        builder.setMessage(scanResult);
-        AlertDialog alert = builder.create();
-        alert.show();
+
+        try {
+            String url = PropertyUtil.getProperty("base_url", getApplicationContext()) + "offers/" + result;
+
+            new HttpAsyTask(url, "GET", null, this.goStyleApp.getToken(), new HttpAsyTask.HttpAsyTaskListener() {
+                @Override
+                public void webServiceDone(String response) {
+                    CouponDetailsActivity.display(ScanActivity.this, scanResult);
+                }
+
+                @Override
+                public void webServiceError(Exception e) {
+                    scannerView.resumeCameraPreview(ScanActivity.this);
+                    displayToast("Aucun coupon trouvé");
+                }
+            }).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
