@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical">
-
+    android:layout_height="match_parent">
     <include
         layout="@layout/l_header"
         android:layout_width="match_parent"
@@ -14,14 +11,17 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="26sp"
+        android:layout_gravity="center"
         android:layout_margin="4dp"
-        tools:text="Mes coupons" />
+        android:fontFamily="@font/open_sans_condensed_bold"
+        android:text="Coupons de réduction"
+        android:textColor="#82C7FF"
+        android:textSize="35sp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#E6E6E9"
+        android:background="#F1F1F1"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="20dp">
@@ -30,15 +30,18 @@
             android:id="@+id/mes_coupons2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
-            tools:text="Saisir manuellement son code" />
+            android:fontFamily="@font/open_sans_light"
+            android:text="Recherche parmis les code disponible"
+            android:textSize="18sp" />
 
         <SearchView
+            android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:queryHint="adaz" />
+            android:queryHint="Exemple : 3RO278" />
 
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"

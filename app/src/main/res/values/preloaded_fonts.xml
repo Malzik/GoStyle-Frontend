@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="preloaded_fonts" translatable="false">
+        <item>@font/aclonica</item>
+        <item>@font/akronim</item>
+        <item>@font/allan_bold</item>
+        <item>@font/bangers</item>
+        <item>@font/belgrano</item>
+        <item>@font/black_ops_one</item>
+        <item>@font/open_sans_bold</item>
+        <item>@font/open_sans_condensed_bold</item>
+        <item>@font/open_sans_light</item>
+        <item>@font/open_sans_semibold</item>
+        <item>@font/open_sans_semibold_italic</item>
+        <item>@font/rock_salt</item>
+    </array>
+</resources>

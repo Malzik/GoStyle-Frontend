@@ -17,5 +17,9 @@
 .idea/misc.xml
 .idea/runConfigurations.xml
 .idea/vcs.xml
+.gradle
 gradlew
 gradlew.bat
+gradle/wrapper/gradle-wrapper.jar
+gradle/wrapper/gradle-wrapper.properties
+app/src/main/AndroidManifest.xml
